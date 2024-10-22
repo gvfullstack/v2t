@@ -18,6 +18,7 @@ export default function Transcript({ transcribedData }: Props) {
         link.click();
         URL.revokeObjectURL(url);
     };
+
     const exportTXT = () => {
         let chunks = transcribedData?.chunks ?? [];
         let text = chunks
@@ -28,6 +29,7 @@ export default function Transcript({ transcribedData }: Props) {
         const blob = new Blob([text], { type: "text/plain" });
         saveBlob(blob, "transcript.txt");
     };
+
     const exportJSON = () => {
         let jsonData = JSON.stringify(transcribedData?.chunks ?? [], null, 2);
 
@@ -43,9 +45,7 @@ export default function Transcript({ transcribedData }: Props) {
     useEffect(() => {
         if (divRef.current) {
             const diff = Math.abs(
-                divRef.current.offsetHeight +
-                    divRef.current.scrollTop -
-                    divRef.current.scrollHeight,
+                divRef.current.offsetHeight + divRef.current.scrollTop - divRef.current.scrollHeight
             );
 
             if (diff <= 64) {
@@ -55,39 +55,43 @@ export default function Transcript({ transcribedData }: Props) {
         }
     });
 
+    const isTranscriptionDone = transcribedData && !transcribedData.isBusy;
+
     return (
         <div
             ref={divRef}
-            className='w-full flex flex-col my-2 p-4 max-h-[20rem] overflow-y-auto'
+            className="w-full flex flex-col my-2 p-4 max-h-[20rem] overflow-y-auto"
         >
             {transcribedData?.chunks &&
                 transcribedData.chunks.map((chunk, i) => (
                     <div
                         key={`${i}-${chunk.text}`}
-                        className='w-full flex flex-row mb-2 bg-white rounded-lg p-4 shadow-xl shadow-black/5 ring-1 ring-slate-700/10'
+                        className="w-full flex flex-row mb-2 bg-white rounded-lg p-4 shadow-xl shadow-black/5 ring-1 ring-slate-700/10"
                     >
-                        <div className='mr-5'>
+                        <div className="mr-5">
                             {formatAudioTimestamp(chunk.timestamp[0])}
                         </div>
                         {chunk.text}
                     </div>
                 ))}
-            {transcribedData && !transcribedData.isBusy && (
-                <div className='w-full text-right'>
-                    <button
-                        onClick={exportTXT}
-                        className='text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 inline-flex items-center'
-                    >
-                        Export TXT
-                    </button>
-                    <button
-                        onClick={exportJSON}
-                        className='text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 inline-flex items-center'
-                    >
-                        Export JSON
-                    </button>
-                </div>
-            )}
+            <div className="w-full text-right">
+                <button
+                    onClick={exportTXT}
+                    className={`text-white font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 inline-flex items-center
+                    ${isTranscriptionDone ? 'bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'bg-gray-400 cursor-not-allowed'}`}
+                    disabled={!isTranscriptionDone}
+                >
+                    Export TXT
+                </button>
+                <button
+                    onClick={exportJSON}
+                    className={`text-white font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 inline-flex items-center
+                    ${isTranscriptionDone ? 'bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'bg-gray-400 cursor-not-allowed'}`}
+                    disabled={!isTranscriptionDone}
+                >
+                    Export JSON
+                </button>
+            </div>
         </div>
     );
 }
