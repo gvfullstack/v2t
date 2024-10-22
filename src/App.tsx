@@ -41,7 +41,7 @@ function App() {
                 <Transcript transcribedData={transcriber.output} />
             </div>
 
-            <div className="absolute bottom-4">
+            {/* <div className="absolute bottom-4">
                 Made with{" "}
                 <a
                     className="underline"
@@ -49,7 +49,7 @@ function App() {
                 >
                     🤗 Transformers.js
                 </a>
-            </div>
+            </div> */}
 
         </div>
     );
