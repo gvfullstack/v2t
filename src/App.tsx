@@ -32,15 +32,17 @@ function App() {
     return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="container flex flex-col justify-center items-center">
-                <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-7xl text-center">
-                    Voice To Text
-                </h1>
+            <img src="/icon.png" alt="icon" className="w-12 h-12"></img>
+            <h1 className="text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-green-400 to-purple-600 sm:text-7xl text-center">
+    Voice To Text
+</h1>
+
                 <h2 className="mt-3 mb-5 px-4 text-center text-1xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
                     ML-powered speech recognition directly in your browser.
                 </h2>
                 <h3 className="mt-3 mb-5 px-4 text-center text-1xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
                     When the transcription is complete, you can download the
-                    entire transcript as a text or JSON filename using the buttons
+                    entire transcript as a text or JSON file using the buttons
                     below.
                 </h3>
 
