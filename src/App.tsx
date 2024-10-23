@@ -2,9 +2,16 @@ import { useEffect } from "react";
 import { AudioManager } from "./components/AudioManager";
 import Transcript from "./components/Transcript";
 import { useTranscriber } from "./hooks/useTranscriber";
+import ReactGA from 'react-ga4';
+
 
 function App() {
     const transcriber = useTranscriber();
+    
+    useEffect(() => {
+        ReactGA.initialize('G-8Z34PS5HZG');
+        ReactGA.send('pageview');
+      }, []);
 
     useEffect(() => {
         // Add meta tag for AdSense
